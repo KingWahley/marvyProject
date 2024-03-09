@@ -3,6 +3,7 @@
 // Import necessary Tailwind CSS classes
 import React, { useState, useEffect } from "react";
 import "./App.css"; // Keep this for custom styles
+import avatar from "./images/avatar.png";
 
 const apiKey = "b81303888057d45a55b44947d03c6710";
 
@@ -57,7 +58,10 @@ function Major() {
   return (
     <div className="chat-container">
       <div className="chat-header">
-        <h1>Marvy</h1>
+        <h3>Marvy</h3>
+        {movies.length > 0 && (
+          <p className="tittle">{movies[currentIndex].title}</p>
+        )}
       </div>
       <div className="change">
         {movies.length > 0 && (
@@ -111,9 +115,13 @@ function Major() {
             </div>
           )}
           {movies.length > 0 && (
-            <div>
-              <p className="tittle">{movies[currentIndex].title}</p>
-              <p>{movies[currentIndex].overview}</p>
+            <div className="response">
+              {/* <p className="tittle">{movies[currentIndex].title}</p> */}
+              <div className="displayReply">
+                <img className="avatar1" src={avatar} alt="My Image" />
+                <p>{movies[currentIndex].overview}</p>
+              </div>
+
               <img
                 className="posters"
                 src={`https://image.tmdb.org/t/p/w500${movies[currentIndex].poster_path}`}

@@ -16,6 +16,7 @@ body {
 }
 .title {
   margin: 3px;
+  display: block;
 }
 
 .chat-container {
@@ -74,8 +75,16 @@ body {
   }
 }
 
-.chat-header h1 {
+.chat-header {
   margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-header h3 {
+  margin: 0px;
 }
 
 .chat-history {
@@ -227,4 +236,14 @@ body {
 }
 .tittle {
   font-weight: 600;
+}
+
+.displayReply {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: end;
+}
+.avatar1 {
+  height: 50px;
 }
