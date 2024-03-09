@@ -233,6 +233,7 @@ body {
 
 .posters {
   width: 70%;
+  margin-left: 30px;
 }
 .tittle {
   font-weight: 600;
@@ -241,9 +242,10 @@ body {
 .displayReply {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: end;
+  margin-bottom: 10px;
 }
 .avatar1 {
-  height: 50px;
+  height: 30px;
 }
