@@ -1,11 +1,24 @@
-/* App.js */
-
-// Import necessary Tailwind CSS classes
 import React, { useState, useEffect } from "react";
 import "./App.css"; // Keep this for custom styles
 import avatar from "./images/avatar.png";
 
 const apiKey = "b81303888057d45a55b44947d03c6710";
+
+function Response({ movie }) {
+  return (
+    <div className="response">
+      <div className="displayReply">
+        <img className="avatar1" src={avatar} alt="My Image" />
+        <p>{movie.overview}</p>
+      </div>
+      <img
+        className="posters"
+        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+        alt={`Poster for ${movie.title}`}
+      />
+    </div>
+  );
+}
 
 function Major() {
   const [searchInput, setSearchInput] = useState("");
@@ -14,13 +27,15 @@ function Major() {
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true); // State for welcome message
+  const [responses, setResponses] = useState([]);
 
   useEffect(() => {
     if (movies.length > 0) {
       setCurrentIndex(0); // Reset currentIndex when movies change
       setShowWelcomeMessage(false); // Hide welcome message when movies are loaded
+      setResponses((prevResponses) => [...prevResponses, movies[currentIndex]]);
     }
-  }, [movies]);
+  }, [movies, currentIndex]);
 
   const searchMovie = async () => {
     setLoading(true);
@@ -109,24 +124,12 @@ function Major() {
       </div>
       <div className="strait">
         <div className="chat-history" id="movie-info">
+          {responses.map((movie, index) => (
+            <Response key={index} movie={movie} />
+          ))}
           {showWelcomeMessage && (
             <div className="welcome-message">
               <p>Welcome to Marvy! Search for a movie title to get started.</p>
-            </div>
-          )}
-          {movies.length > 0 && (
-            <div className="response">
-              {/* <p className="tittle">{movies[currentIndex].title}</p> */}
-              <div className="displayReply">
-                <img className="avatar1" src={avatar} alt="My Image" />
-                <p>{movies[currentIndex].overview}</p>
-              </div>
-
-              <img
-                className="posters"
-                src={`https://image.tmdb.org/t/p/w500${movies[currentIndex].poster_path}`}
-                alt={`Poster for ${movies[currentIndex].title}`}
-              />
             </div>
           )}
         </div>
