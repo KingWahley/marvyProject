@@ -197,6 +197,20 @@ body {
     width: 100%;
   }
 
+  .chat-container {
+    /* height: 100vh; */
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 15px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  }
+  .chat-history {
+    max-height: 100vh;
+  }
+
   .empty {
     /* margin-top: 50px; */
     margin-bottom: 100px;
