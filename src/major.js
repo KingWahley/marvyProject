@@ -145,8 +145,8 @@ function Major() {
             </>
           )}
         </div>
-        <div className="empty"></div>
       </div>
+      <div className="empty"></div>
 
       {/* <div className="loader">{loading && <p>Loading...</p>}</div> */}
       <div className="mess">
