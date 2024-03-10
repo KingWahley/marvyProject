@@ -249,3 +249,11 @@ body {
 .avatar1 {
   height: 30px;
 }
+.commune {
+  display: flex;
+  flex-direction: column;
+}
+.userMessage {
+  display: flex;
+  justify-content: flex-end;
+}

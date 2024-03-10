@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css"; // Keep this for custom styles
 import avatar from "./images/avatar.png";
 
 const apiKey = "b81303888057d45a55b44947d03c6710";
 
 function Response({ movie }) {
+  if (!movie) return null;
+
   return (
     <div className="response">
       <div className="displayReply">
@@ -20,6 +22,14 @@ function Response({ movie }) {
   );
 }
 
+function UserMessage({ message }) {
+  return (
+    <div className="user-message">
+      <p>{message}</p>
+    </div>
+  );
+}
+
 function Major() {
   const [searchInput, setSearchInput] = useState("");
   const [movies, setMovies] = useState([]);
@@ -27,15 +37,27 @@ function Major() {
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true); // State for welcome message
-  const [responses, setResponses] = useState([]);
+  const [chatHistory, setChatHistory] = useState([]);
+
+  const chatHistoryRef = useRef(null);
 
   useEffect(() => {
     if (movies.length > 0) {
       setCurrentIndex(0); // Reset currentIndex when movies change
       setShowWelcomeMessage(false); // Hide welcome message when movies are loaded
-      setResponses((prevResponses) => [...prevResponses, movies[currentIndex]]);
+      setChatHistory((prevHistory) => [
+        ...prevHistory,
+        { movie: movies[currentIndex], userMessage: searchInput },
+      ]);
     }
   }, [movies, currentIndex]);
+
+  useEffect(() => {
+    if (chatHistoryRef.current) {
+      // Scroll to the bottom of the chat history
+      chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
+    }
+  }, [chatHistory]);
 
   const searchMovie = async () => {
     setLoading(true);
@@ -68,6 +90,16 @@ function Major() {
 
   const previous = () => {
     setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
+  };
+
+  const handleUserMessage = () => {
+    if (searchInput.trim() === "") return;
+    setChatHistory((prevHistory) => [
+      ...prevHistory,
+      { movie: null, userMessage: searchInput },
+    ]);
+    setSearchInput("");
+    searchMovie();
   };
 
   return (
@@ -123,9 +155,17 @@ function Major() {
         )}
       </div>
       <div className="strait">
-        <div className="chat-history" id="movie-info">
-          {responses.map((movie, index) => (
-            <Response key={index} movie={movie} />
+        <div className="chat-history" id="movie-info" ref={chatHistoryRef}>
+          {chatHistory.map(({ movie, userMessage }, index) => (
+            <React.Fragment key={index}>
+              <div className="commune">
+                <div className="userMessage">
+                  <UserMessage message={userMessage} />
+                </div>
+
+                <Response movie={movie} />
+              </div>
+            </React.Fragment>
           ))}
           {showWelcomeMessage && (
             <div className="welcome-message">
@@ -145,7 +185,7 @@ function Major() {
           <button
             type="button"
             id="search-button"
-            onClick={searchMovie}
+            onClick={handleUserMessage}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
             Search
