@@ -145,7 +145,7 @@ function Major() {
         )}
       </div>
 
-      <div className="loader">{loading && <p>Loading...</p>}</div>
+      {/* <div className="loader">{loading && <p>Loading...</p>}</div> */}
       <div className="mess">
         {error && (
           <p className="marvy">

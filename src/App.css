@@ -253,7 +253,7 @@ body {
   display: flex;
   flex-direction: column;
 }
-.userMessage {
+.user-message {
   display: flex;
   justify-content: flex-end;
 }
