@@ -104,45 +104,48 @@ function Major() {
 
   return (
     <div className="chat-container">
-      <div className="chat-header">
-        <h3>Marvy</h3>
-        {movies.length > 0 && (
-          <p className="tittle">{movies[currentIndex].title}</p>
-        )}
-      </div>
-      <div className="change">
-        {movies.length > 0 && (
-          <>
-            <button
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#4CAF50",
-                color: "white",
-                borderRadius: "8px",
-                border: "none",
-                cursor: "pointer",
-                boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-              }}
-              onClick={previous}
-            >
-              Previous
-            </button>
-            <button
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#4CAF50",
-                color: "white",
-                borderRadius: "8px",
-                border: "none",
-                cursor: "pointer",
-                boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-              }}
-              onClick={nextItem}
-            >
-              Next Movie with similar title
-            </button>
-          </>
-        )}
+      <div className="head">
+        <div className="chat-header">
+          <h3>Marvy</h3>
+          {movies.length > 0 && (
+            <p className="tittle">{movies[currentIndex].title}</p>
+          )}
+        </div>
+        <div className="change">
+          {movies.length > 0 && (
+            <>
+              <button
+                style={{
+                  padding: "10px 20px",
+                  backgroundColor: "#4CAF50",
+                  color: "white",
+                  borderRadius: "8px",
+                  border: "none",
+                  cursor: "pointer",
+                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+                }}
+                onClick={previous}
+              >
+                Previous
+              </button>
+              <button
+                style={{
+                  padding: "10px 20px",
+                  backgroundColor: "#4CAF50",
+                  color: "white",
+                  borderRadius: "8px",
+                  border: "none",
+                  cursor: "pointer",
+                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+                }}
+                onClick={nextItem}
+              >
+                Next Movie with similar title
+              </button>
+            </>
+          )}
+        </div>
+        <div className="empty"></div>
       </div>
 
       {/* <div className="loader">{loading && <p>Loading...</p>}</div> */}

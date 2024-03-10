@@ -207,6 +207,16 @@ body {
     background-color: #333;
   }
 
+  .head {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+  .empty {
+    margin-bottom: 10px;
+  }
+
   .chat-input input[type="text"] {
     padding: 8px;
   }
