@@ -235,6 +235,12 @@ body {
   .chat-header {
     border-radius: 0px;
   }
+  .welcome-message {
+    margin-top: 50px;
+  }
+  /* .response {
+    height: 100vh;
+  } */
 }
 
 .change {
