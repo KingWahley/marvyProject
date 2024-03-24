@@ -44,7 +44,7 @@ function Major() {
   useEffect(() => {
     if (movies.length > 0) {
       setCurrentIndex(0); // Reset currentIndex when movies change
-      setShowWelcomeMessage(false); // Hide welcome message when movies are loaded
+      
       setChatHistory((prevHistory) => [
         ...prevHistory,
         { movie: movies[currentIndex], userMessage: searchInput },
@@ -98,6 +98,7 @@ function Major() {
       ...prevHistory,
       { movie: null, userMessage: searchInput },
     ]);
+    setShowWelcomeMessage(false); // Hide welcome message when movies are loaded
     setSearchInput("");
     searchMovie();
   };
@@ -111,7 +112,7 @@ function Major() {
             <p className="tittle">{movies[currentIndex].title}</p>
           )}
         </div>
-        <div className="change">
+        {/* <div className="change">
           {movies.length > 0 && (
             <>
               <button
@@ -144,7 +145,7 @@ function Major() {
               </button>
             </>
           )}
-        </div>
+        </div> */}
       </div>
       <div className="empty"></div>
 
