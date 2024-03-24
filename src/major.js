@@ -5,19 +5,47 @@ import avatar from "./images/avatar.png";
 const apiKey = "b81303888057d45a55b44947d03c6710";
 
 function Response({ movie }) {
-  if (!movie) return null;
+  const [summary, setSummary] = useState("");
+  const [displayedSummary, setDisplayedSummary] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+
+  useEffect(() => {
+    if (movie) {
+      setSummary(movie.overview);
+      setDisplayedSummary("");
+      setIsTyping(true);
+    }
+  }, [movie]);
+
+  useEffect(() => {
+    let timeout;
+    if (isTyping) {
+      timeout = setTimeout(() => {
+        const nextChar = summary[displayedSummary.length];
+        setDisplayedSummary((prev) => prev + nextChar);
+        if (displayedSummary.length === summary.length) {
+          setIsTyping(false);
+        }
+      }, 5); // Adjust typing speed here
+    }
+    return () => clearTimeout(timeout);
+  }, [isTyping, displayedSummary, summary]);
 
   return (
     <div className="response">
-      <div className="displayReply">
-        <img className="avatar1" src={avatar} alt="My Image" />
-        <p>{movie.overview}</p>
-      </div>
-      <img
-        className="posters"
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        alt={`Poster for ${movie.title}`}
-      />
+      {movie && (
+        <div className="displayReply">
+          <img className="avatar1" src={avatar} alt="My Image" />
+          <p className="typewriter">{displayedSummary}</p>
+        </div>
+      )}
+      {movie && (
+        <img
+          className="posters"
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={`Poster for ${movie.title}`}
+        />
+      )}
     </div>
   );
 }
@@ -88,8 +116,8 @@ function Major() {
     );
   };
 
-  const previous = () => {
-    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
+  const handleNextMovie = () => {
+    nextItem();
   };
 
   const handleUserMessage = () => {
@@ -112,44 +140,27 @@ function Major() {
             <p className="tittle">{movies[currentIndex].title}</p>
           )}
         </div>
-        {/* <div className="change">
-          {movies.length > 0 && (
-            <>
-              <button
-                style={{
-                  padding: "10px 20px",
-                  backgroundColor: "#4CAF50",
-                  color: "white",
-                  borderRadius: "8px",
-                  border: "none",
-                  cursor: "pointer",
-                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                }}
-                onClick={previous}
-              >
-                Previous
-              </button>
-              <button
-                style={{
-                  padding: "10px 20px",
-                  backgroundColor: "#4CAF50",
-                  color: "white",
-                  borderRadius: "8px",
-                  border: "none",
-                  cursor: "pointer",
-                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                }}
-                onClick={nextItem}
-              >
-                Next Movie with similar title
-              </button>
-            </>
-          )}
-        </div> */}
+        <div className="change">
+          {/* {movies.length > 0 && (
+            <button
+              style={{
+                padding: "10px 20px",
+                backgroundColor: "#4CAF50",
+                color: "white",
+                borderRadius: "8px",
+                border: "none",
+                cursor: "pointer",
+                boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+              }}
+              onClick={handleNextMovie}
+            >
+              Movie with similar title
+            </button>
+          )} */}
+        </div>
       </div>
       <div className="empty"></div>
 
-      {/* <div className="loader">{loading && <p>Loading...</p>}</div> */}
       <div className="mess">
         {error && (
           <p className="marvy">
@@ -179,6 +190,7 @@ function Major() {
         </div>
         <div className="chat-input">
           <input
+        
             type="text"
             id="search-input"
             placeholder="Enter a movie title..."
